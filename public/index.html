@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html ng-app="clicktaleSearchApp" lang="en">
+<head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>People Search</title>
+    <link rel="stylesheet" href="style.css">
+    <link data-require="bootstrap-css@*" data-semver="4.0.0-alpha.2" rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.css">
+</head>
+<body>
+
+<div ng-controller="listCtrl as list" class="container">
+    <div class="page-header">
+        <h1 class="font-color-blue">PEOPLE SEARCH</h1>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <md-content class="md-padding">
+                <form ng-submit="$event.preventDefault()">
+                    <md-autocomplete
+                            md-selected-item="list.selectedItem"
+                            md-search-text-change="list.searchTextChange(list.searchText)"
+                            md-search-text="list.searchText"
+                            md-selected-item-change="list.searchTextChange(item.first_name)"
+                            md-items="item in list.data | filter:list.searchText"
+                            md-item-text="item.first_name"
+                            md-min-length="0"
+                            placeholder="You can start looking the people">
+                        <md-item-template>
+                            <span md-highlight-text="list.searchText" md-highlight-flags="^i">{{item.first_name}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
+                </form>
+            </md-content>
+        </div>
+    </div>
+
+    <div>
+        <div class="row displayFlex">
+            <div class="mainCol">
+                <div class="col-md-12"
+                     ng-repeat="people in list.pageData">
+                    <div class="well well-sm">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img ng-src="{{people.avatar}}" class="img-responsive well-img">
+                            </div>
+                            <div class="col-md-10">
+                                <h4 class="font-color-blue">{{people.first_name}} {{people.last_name}}
+                                    <span class="fs12-Capitalize">{{people.job_title}}</span></h4>
+                                <p>{{people.gender}}, {{people.email}}</p>
+                                <a href="{{people.link}}">Website</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="!list.searchText" class="col-md-12" ng-repeat="firstPerson in list.pageData |limitTo:1">
+                <div class="well well-md">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img ng-src="{{firstPerson.avatar}}" class="well-img-First">
+                        </div>
+                        <div class="col-md-10">
+                            <h4 class="font-color-blue">{{firstPerson.first_name}} {{firstPerson.last_name}}
+                                <span class="fs12-Capitalize">{{firstPerson.job_title}}</span></h4>
+                            <p>{{firstPerson.gender}}, {{firstPerson.email}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>{{firstPerson.description}}</p>
+                            <a href="{{people.link}}">Website</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <uib-pagination class="pagination" total-items="list.totalItems" ng-change="list.onPageChange(currentPage)"
+                    ng-model="currentPage" items-per-page="list.itemsPerPage"></uib-pagination>
+</div>
+
+
+<script src="../angular/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
+<script src="../angular-animate/angular-animate.js"></script>
+<script src="../angular-aria/angular-aria.js"></script>
+<script data-require="ui-bootstrap@*" data-semver="1.3.2"
+        src="https://cdn.rawgit.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-1.3.2.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="js/app.js"></script>
+<script src="js/controller.js"></script>
+</body>
+</html>
