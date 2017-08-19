@@ -45,7 +45,7 @@ app.controller('listCtrl', ['$scope', function ($scope) {
         } else {
             for (let i = 0; i < vm.data.length; i++) {
                 const person = vm.data[i];
-                if (person.first_name.includes(vm.searchText)) {
+                if (person.first_name.includes(vm.searchText.charAt(0).toUpperCase() + vm.searchText.slice(1).toLowerCase())) {
                     newFilteredPeople.push(person);
                 }
             }
@@ -56,6 +56,7 @@ app.controller('listCtrl', ['$scope', function ($scope) {
         vm.totalItems = vm.filteredPeople.length;
         updatePageData();
     }
+
     filterData();
 
 
