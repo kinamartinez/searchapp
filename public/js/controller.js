@@ -16,10 +16,12 @@ app.controller('listCtrl', ['$scope', function ($scope) {
     vm.itemsPerPage = 5;
     vm.searchTextChange = searchThePeople;
     vm.onPageChange = updateThePage;
+    vm.maxSize = 5;
 
 
     function searchThePeople(newSearchText) {
         vm.searchText = newSearchText;
+        console.log("searchtext"+ vm.searchText );
         filterData();
     };
 
@@ -47,6 +49,7 @@ app.controller('listCtrl', ['$scope', function ($scope) {
                 const person = vm.data[i];
                 if (person.first_name.includes(vm.searchText.charAt(0).toUpperCase() + vm.searchText.slice(1).toLowerCase())) {
                     newFilteredPeople.push(person);
+
                 }
             }
         }
